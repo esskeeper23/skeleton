@@ -52,6 +52,24 @@ const deleteUser = async (id) => {
     return data
 }
 
+const deleteMyUser = async (id) => {
+    const data = await Users.destroy({
+        where: {
+            id: id
+        }
+    })
+    return data
+}
+
+const updateMyUser = async (id, data) => {
+    const result = await Users.update(data, {
+        where: {
+            id: id
+        }
+    })
+    return result
+}
+
 //? Un servidor contiene la API
 //? Otro servidor contiene la Base de Datos
 
@@ -71,5 +89,7 @@ module.exports = {
     getUserById,
     updateUser,
     deleteUser,
-    getUserByEmail
+    getUserByEmail,
+    deleteMyUser,
+    updateMyUser
 }

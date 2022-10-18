@@ -23,8 +23,15 @@ router.get('/',
 //! router.delete('/:id')
 
 router.route('/me')
-    .get(passport.authenticate('jwt', {session: false}),
-    userServices.getMyUser)
+    .get(
+        passport.authenticate('jwt', {session: false}),
+        userServices.getMyUser)
+    .delete(
+        passport.authenticate('jwt', {session: false}),
+        userServices.deleteMyUser)
+    .patch(
+        passport.authenticate('jwt', {session: false}),
+        userServices.updateMyUser)
 
 router.route('/:id')
     .get(userServices.getUserById)

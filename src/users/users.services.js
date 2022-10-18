@@ -93,6 +93,42 @@ const deleteUser = (req, res) => {
     });
 };
 
+const deleteMyUser = (req, res) => {
+  const id = req.user.id;
+  usersControllers
+    .deleteUser(id)
+    .then((data) => {
+      if (data) {
+        res.status(204).json();
+      } else {
+        res.status(404).json({ message: "Invalid ID" });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
+};
+
+const updateMyUser = (req, res) => {
+  const id = req.user.id;
+  const { firstName, lastName, phone, gender, country } = req.body;
+
+  usersControllers
+    .updateUser(id, { firstName, lastName, phone, gender, country })
+    .then((data) => {
+      if (data[0]) {
+        res
+          .status(200)
+          .json({ message: `User with ID: ${id}, edited succesfully!` });
+      } else {
+        res.status(404).json({ message: "Invalid ID" });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
+};
+
 const getMyUser = (req, res) => {
   const id = req.user.id
 
@@ -116,5 +152,7 @@ module.exports = {
     patchUser,
     registerUser,
     deleteUser,
-    getMyUser
+    getMyUser,
+    deleteMyUser,
+    updateMyUser
 }
